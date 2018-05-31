@@ -21,7 +21,8 @@ export default new vuex.Store({
   state: {
     user: {},
     boards: [],
-    board: {}
+    board: {},
+    lists: []
   },
   mutations: {
     setUser(state, user) {
@@ -32,6 +33,12 @@ export default new vuex.Store({
     },
     setBoards(state, boards) {
       state.boards = boards
+    },
+    setBoard(state, board) {
+      state.board = board
+    },
+    setLists(state, lists) {
+      state.lists = lists
     }
   },
   actions: {
@@ -47,16 +54,16 @@ export default new vuex.Store({
     },
     logout({ commit, dispatch }) {
       auth.delete('/logout')
-      .then(res => {
-        console.log("Successfully logged out!")
+        .then(res => {
+          console.log("Successfully logged out!")
           commit('deleteUser')
-          router.push({name: 'Login'})
+          router.push({ name: 'Login' })
         })
     },
     register({ commit, dispatch }, userData) {
       auth.post('/register', userData)
         .then(res => {
-          console.log("Registration Successful")  
+          console.log("Registration Successful")
           router.push({ name: 'Login' }) // I changed this to just change the component 
         })
     },
@@ -67,22 +74,45 @@ export default new vuex.Store({
           router.push({ name: 'Home' })
         })
         .catch(res => {
-          console.log(res.data)
+          console.log(res)
         })
     },
     //APP STUFF
-    fetchBoards({commit, dispatch}, user) {
+    fetchBoards({ commit, dispatch }, user) {
       api.get('/api/boards', user)
-      .then(res =>{
-        commit('setBoards', res.data)
-      })
+        .then(res => {
+          commit('setBoards', res.data)
+        })
     },
-    createBoard({commit, dispatch, state}, title) {
+    createBoard({ commit, dispatch, state }, title) {
       api.post('/api/boards', title)
-      .then(res =>{
-        console.log(res.data)
-        dispatch ('fetchBoards', state.user)
-      })
+        .then(res => {
+          dispatch('fetchBoards', state.user)
+        })
+    },
+    createList({ commit, dispatch }, list) {
+      api.post('/api/lists', list)
+        .then(res => {
+          dispatch('fetchLists', list.parentId)
+        })
+    },
+    fetchLists({ commit, dispatch }, boardId) {
+      api.get('/api/lists', boardId)
+        .then(res => {
+          commit('setLists', res.data)
+        })
+    },
+    deleteList({ commit, dispatch }, list) {
+      api.delete('/api/lists/' + list._id, list)
+        .then(res => {
+          dispatch('fetchLists', list.parentId)
+        })
+    },
+    deleteBoard({ commit, dispatch, state }, board) {
+      api.delete('/api/boards/' + board._id, board)
+        .then(res => {
+          dispatch('fetchBoards', state.user)
+        })
     }
 
 

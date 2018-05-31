@@ -1,9 +1,12 @@
 <template>
   <div class="home">
+    <button @click="logout" v-if="user">Logout</button>
+    <hr>
     <h1>Hello {{user.username}}</h1>
     <hr>
     <div v-for="board in boards">
       <button @click="boardPage(board)">{{board.title}}</button>
+      <button @click="deleteBoard(board)">Delete board</button>
     </div>
     <form @submit.prevent="createBoard">
       <input type="text" name="title" v-model="title.title">
@@ -42,8 +45,16 @@
         this.$store.dispatch('createBoard', this.title)
         this.title = ''
       },
-      boardPage(board){
-        router.push({name: 'Board'})
+      boardPage(board) {
+        this.$store.commit('setBoard', board)
+        router.push({ name: 'Board' })
+      },
+      logout() {
+        this.$store.dispatch('logout')
+        router.push({ name: 'Login' })
+      },
+      deleteBoard(board){
+        this.$store.dispatch('deleteBoard', board)
       }
     }
   }
