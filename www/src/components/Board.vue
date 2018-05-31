@@ -28,6 +28,9 @@
                 }
             }
         },
+        mounted(){
+            this.$store.dispatch('fetchLists', this.board._id)
+        },
         computed: {
             user() {
                 return this.$store.state.user
@@ -42,6 +45,7 @@
         methods: {
             pageHome() {
                 router.push({ name: 'Home' })
+                
             },
 
             logout() {
@@ -49,7 +53,7 @@
                 router.push({ name: 'Login' })
             },
             createList(){
-                this.list.parentId = 0
+                this.list.parentId = this.board._id
                 this.$store.dispatch('createList', this.list)
                 console.log(this.list)
             },

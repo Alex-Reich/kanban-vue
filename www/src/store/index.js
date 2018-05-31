@@ -30,6 +30,9 @@ export default new vuex.Store({
     },
     deleteUser(state) {
       state.user = {}
+      state.boards = []
+      state.board = {}
+      state.lists = []
     },
     setBoards(state, boards) {
       state.boards = boards

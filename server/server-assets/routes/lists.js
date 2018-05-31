@@ -45,7 +45,10 @@ router.put('/api/lists/:id', (req, res) =>{
 })
 
 // Delete list
-router.delete('/api/lists/:id', (req, res) =>{
+router.delete('/api/lists/:id', (req, res, next) =>{
+    if(req.body.author != req.session.id) {
+        return next()
+    }
     Lists.findByIdAndRemove(req.params.id)
     .then(list=>{
         res.status(200).send({message: 'successfully deleted'})
