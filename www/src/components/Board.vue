@@ -2,6 +2,7 @@
     <div class="Board">
         <button @click="pageHome">Back to home</button>
         <h1>{{board.title}}</h1>
+        <h2>{{board._id}}</h2>
         <!-- <div v-for="list in lists"> -->
         <!-- </div> -->
     </div>
@@ -9,7 +10,7 @@
 </template>
 
 <script>
-    import router from './router'
+    import router from '../router'
     export default {
         name: 'Board',
         data() {

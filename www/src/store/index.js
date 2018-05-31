@@ -20,7 +20,8 @@ var auth = axios.create({
 export default new vuex.Store({
   state: {
     user: {},
-    boards: []
+    boards: [],
+    board: {}
   },
   mutations: {
     setUser(state, user) {

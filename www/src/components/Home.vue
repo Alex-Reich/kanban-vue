@@ -1,9 +1,9 @@
 <template>
   <div class="home">
-    <button @click="logout">Logout</button>
+    <h1>Hello {{user.username}}</h1>
     <hr>
     <div v-for="board in boards">
-      {{board.title}}
+      <button @click="boardPage(board)">{{board.title}}</button>
     </div>
     <form @submit.prevent="createBoard">
       <input type="text" name="title" v-model="title.title">
@@ -38,13 +38,12 @@
       }
     },
     methods: {
-      logout() {
-        this.$store.dispatch('logout')
-        router.push('Login')
-      },
       createBoard() {
         this.$store.dispatch('createBoard', this.title)
         this.title = ''
+      },
+      boardPage(board){
+        router.push({name: 'Board'})
       }
     }
   }
