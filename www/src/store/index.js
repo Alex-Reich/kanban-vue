@@ -22,7 +22,8 @@ export default new vuex.Store({
     user: {},
     boards: [],
     board: {},
-    lists: []
+    lists: [],
+    tasks: []
   },
   mutations: {
     setUser(state, user) {
@@ -33,6 +34,7 @@ export default new vuex.Store({
       state.boards = []
       state.board = {}
       state.lists = []
+      state.tasks = []
     },
     setBoards(state, boards) {
       state.boards = boards
@@ -42,6 +44,9 @@ export default new vuex.Store({
     },
     setLists(state, lists) {
       state.lists = lists
+    },
+    setTasks(state, tasks){
+      state.tasks = tasks
     }
   },
   actions: {
@@ -116,7 +121,14 @@ export default new vuex.Store({
         .then(res => {
           dispatch('fetchBoards', state.user)
         })
+    },
+    fetchTasks({commit, dispatch}, listId) {
+      api.get('/api/tasks' + listId)
+      .then(res =>{
+        commit('setTasks', res.data)
+      })
     }
+
 
 
   }

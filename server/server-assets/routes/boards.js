@@ -45,7 +45,7 @@ router.put('/api/boards/:id', (req, res) =>{
 })
 
 // Delete board
-router.delete('/api/boards/:id', (req, res) =>{
+router.delete('/api/boards/:id', (req, res, next) =>{
     if(req.body.author != req.session.id) {
         return next()
     }

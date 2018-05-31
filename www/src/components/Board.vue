@@ -9,9 +9,13 @@
             <button type="submit">Add list</button>
         </form>
         <div v-for="list in lists">
-        <h1>{{list.title}}</h1>
-        <button @click="deleteList(list)">Delete this list</button>
+            <h1>{{list.title}}</h1>
+            <button @click="deleteList(list)">Delete this list</button>
         </div>
+
+        <!-- <div v-for="task in tasks">
+            <h1></h1>
+        </div> -->
     </div>
 
 </template>
@@ -28,7 +32,7 @@
                 }
             }
         },
-        mounted(){
+        mounted() {
             this.$store.dispatch('fetchLists', this.board._id)
         },
         computed: {
@@ -45,19 +49,19 @@
         methods: {
             pageHome() {
                 router.push({ name: 'Home' })
-                
+
             },
 
             logout() {
                 this.$store.dispatch('logout')
                 router.push({ name: 'Login' })
             },
-            createList(){
+            createList() {
                 this.list.parentId = this.board._id
                 this.$store.dispatch('createList', this.list)
                 console.log(this.list)
             },
-            deleteList(list){
+            deleteList(list) {
                 this.$store.dispatch('deleteList', list)
             }
         }
