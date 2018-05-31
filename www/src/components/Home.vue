@@ -1,34 +1,55 @@
 <template>
   <div class="home">
-<button @click="logout">Logout</button>
-<hr>
-
+    <button @click="logout">Logout</button>
+    <hr>
+    <div v-for="board in boards">
+      {{board.title}}
+    </div>
+    <form @submit.prevent="createBoard">
+      <input type="text" name="title" v-model="title.title">
+      <button type="submit">Create new board</button>
+    </form>
   </div>
 </template>
 
 <script>
   import router from '../router'
-export default {
-  name: 'Home',
-  data () {
-    return {
-    }
-  },
-  mounted(){
-    if(!this.$store.state.user._id){
-      router.push({name: 'Login'}) // this goes to a login.vue
-    }
-  },
-  methods:{
-    logout(){
-      this.$store.dispatch('logout')
-      router.push('Login')
+  export default {
+    name: 'Home',
+    data() {
+      return {
+        title: {
+          title: ''
+        }
+      }
+    },
+    mounted() {
+      if (!this.$store.state.user._id) {
+        router.push({ name: 'Login' }) // this goes to a login.vue
+      }
+      this.$store.dispatch('fetchBoards', this.user)
+    },
+    computed: {
+      user() {
+        return this.$store.state.user
+      },
+      boards() {
+        return this.$store.state.boards
+      }
+    },
+    methods: {
+      logout() {
+        this.$store.dispatch('logout')
+        router.push('Login')
+      },
+      createBoard() {
+        this.$store.dispatch('createBoard', this.title)
+        this.title = ''
+      }
     }
   }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>

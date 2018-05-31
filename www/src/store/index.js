@@ -19,7 +19,8 @@ var auth = axios.create({
 
 export default new vuex.Store({
   state: {
-    user: {}
+    user: {},
+    boards: []
   },
   mutations: {
     setUser(state, user) {
@@ -27,6 +28,9 @@ export default new vuex.Store({
     },
     deleteUser(state) {
       state.user = {}
+    },
+    setBoards(state, boards) {
+      state.boards = boards
     }
   },
   actions: {
@@ -64,9 +68,22 @@ export default new vuex.Store({
         .catch(res => {
           console.log(res.data)
         })
+    },
+    //APP STUFF
+    fetchBoards({commit, dispatch}, user) {
+      api.get('/api/boards', user)
+      .then(res =>{
+        commit('setBoards', res.data)
+      })
+    },
+    createBoard({commit, dispatch, state}, title) {
+      api.post('/api/boards', title)
+      .then(res =>{
+        console.log(res.data)
+        dispatch ('fetchBoards', state.user)
+      })
     }
 
-    //APP STUFF
 
   }
 })
