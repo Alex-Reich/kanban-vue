@@ -12,7 +12,7 @@ router.get('/api/lists/:id?', (req, res) => {
                 res.status(400).send(err)
             })
     }
-    Lists.find(req.query)
+    Lists.find({author: req.session.uid})
         .then(lists => {
             res.status(200).send(lists)
         })
@@ -23,6 +23,7 @@ router.get('/api/lists/:id?', (req, res) => {
 
 // Create list
 router.post('/api/lists', (req, res) =>{
+    req.body.author=req.session.uid
     Lists.create(req.body)
         .then(newList =>{
             res.status(200).send(newList)

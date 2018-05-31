@@ -12,7 +12,7 @@ router.get('/api/tasks/:id?', (req, res) => {
                 res.status(400).send(err)
             })
     }
-    Tasks.find(req.query)
+    Tasks.find({author: req.session.uid})
         .then(tasks => {
             res.status(200).send(tasks)
         })
@@ -23,6 +23,7 @@ router.get('/api/tasks/:id?', (req, res) => {
 
 // Create task
 router.post('/api/tasks', (req, res) =>{
+    req.body.author=req.session.uid
     Tasks.create(req.body)
         .then(newTask =>{
             res.status(200).send(newTask)

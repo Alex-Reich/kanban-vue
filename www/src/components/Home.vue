@@ -1,6 +1,8 @@
 <template>
   <div class="home">
 <button @click="logout">Logout</button>
+<hr>
+
   </div>
 </template>
 

@@ -12,7 +12,7 @@ router.get('/api/comments/:id?', (req, res) => {
                 res.status(400).send(err)
             })
     }
-    Comments.find(req.query)
+    Comments.find({author: req.session.uid})
         .then(comments => {
             res.status(200).send(comments)
         })
@@ -23,6 +23,7 @@ router.get('/api/comments/:id?', (req, res) => {
 
 // Create comment
 router.post('/api/comments', (req, res) =>{
+    req.body.author=req.session.uid
     Comments.create(req.body)
         .then(newComment =>{
             res.status(200).send(newComment)
