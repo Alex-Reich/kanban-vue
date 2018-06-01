@@ -9,7 +9,7 @@
       <button @click="deleteBoard(board)">Delete board</button>
     </div>
     <form @submit.prevent="createBoard">
-      <input type="text" name="title" v-model="title.title">
+      <input type="text" name="title" v-model="title.title" placeholder="Board title goes here">
       <button type="submit">Create new board</button>
     </form>
   </div>

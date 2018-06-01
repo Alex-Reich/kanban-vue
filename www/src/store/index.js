@@ -28,7 +28,7 @@ export default new vuex.Store({
     board: {},
     lists: [],
     tasks: [],
-    taskList:{}
+    taskList: {}
   },
   mutations: {
     setUser(state, user) {
@@ -50,10 +50,10 @@ export default new vuex.Store({
     setLists(state, lists) {
       state.lists = lists
     },
-    setTasks(state, tasks){
+    setTasks(state, tasks) {
       state.tasks = tasks
     },
-    setTaskList(state, tasks){
+    setTaskList(state, tasks) {
       // state.taskList = tasks
       console.log("got here")
     }
@@ -95,6 +95,8 @@ export default new vuex.Store({
         })
     },
     //APP STUFF
+
+    //////// BOARDS //////////////////////////////////
     fetchBoards({ commit, dispatch }, user) {
       api.get('/api/boards', user)
         .then(res => {
@@ -107,6 +109,15 @@ export default new vuex.Store({
           dispatch('fetchBoards', state.user)
         })
     },
+    deleteBoard({ commit, dispatch, state }, board) {
+      api.delete('/api/boards/' + board._id, board)
+        .then(res => {
+          testFunction()
+          dispatch('fetchBoards', state.user)
+        })
+    },
+
+    ////////  LISTS //////////////////////////////////
     createList({ commit, dispatch }, list) {
       api.post('/api/lists', list)
         .then(res => {
@@ -125,18 +136,25 @@ export default new vuex.Store({
           dispatch('fetchLists', list.parentId)
         })
     },
-    deleteBoard({ commit, dispatch, state }, board) {
-      api.delete('/api/boards/' + board._id, board)
-        .then(res => {
-          testFunction()
-          dispatch('fetchBoards', state.user)
-        })
-      },
-    fetchTasks({commit, dispatch}) {
+
+    //////// TASKS //////////////////////////////////
+    fetchTasks({ commit, dispatch }) {
       api.get('/api/tasks')
-      .then(res =>{
-        commit('setTasks', res.data)
-      })
+        .then(res => {
+          commit('setTasks', res.data)
+        })
+    },
+    deleteTasks({ commit, dispatch }, task) {
+      api.delete('/api/tasks/' + task._id, task)
+        .then(res => {
+          dispatch('fetchTasks', task.parentId)
+        })
+    },
+    createTask({ commit, dispatch }, task) {
+      api.post('/api/tasks', task)
+        .then(res => {
+          dispatch('fetchTasks', task.parentId)
+        })
     }
 
 

@@ -10,12 +10,14 @@
         </form>
         <div v-for="list in lists">
             <h1>{{list.title}}</h1>
+            <form @submit.prevent="createTask(list)" :key="list._id">
+                <input type="text" name="body" v-model="task.body" placeholder="Create a task">
+                <button type="submit">Add Task</button>
+            </form>
             <button @click="deleteList(list)">Delete this list</button>
+            <!-- <tasks :list="" button-text="Add Comment" :handle-button-click="createComment"></tasks> -->
         </div>
-
-        <!-- <div v-for="task in tasks">
-            <h1></h1>
-        </div> -->
+        {{tasks}}
     </div>
 
 </template>
@@ -29,11 +31,16 @@
                 list: {
                     title: '',
                     parentId: ''
+                },
+                task:{
+                    body: '',
+                    parentId:''
                 }
             }
         },
         mounted() {
-            this.$store.dispatch('fetchLists', this.board._id)
+            this.$store.dispatch('fetchLists', this.board._id),
+            this.$store.dispatch('fetchTasks')
         },
         computed: {
             user() {
@@ -44,6 +51,12 @@
             },
             lists() {
                 return this.$store.state.lists
+            },
+            taskList() {
+                return this.$store.state.taskList
+            },
+            tasks(){
+                return this.$store.state.tasks
             }
         },
         methods: {
@@ -64,6 +77,13 @@
             },
             deleteList(list) {
                 this.$store.dispatch('deleteList', list)
+            },
+            createTask(list){
+                this.task.parentId=list._id
+        
+                console.log(this.task)
+                this.$store.dispatch('createTask',this.task)
+                this.task={body: '', parentId: ''}
             }
         }
     }
