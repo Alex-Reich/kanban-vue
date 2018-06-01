@@ -8,17 +8,17 @@
             <input type="text" name="title" v-model="list.title" placeholder="Title goes here">
             <button type="submit">Add list</button>
         </form>
-        <div v-for="list in lists">
-            <h1>{{list.title}}</h1>
-            <form @submit.prevent="createTask(list)" :key="list._id">
-                <input type="text" name="body" v-model="task.body" placeholder="Create a task">
-                <button type="submit">Add Task</button>
-            </form>
-            <button @click="deleteList(list)">Delete this list</button>
-            <!-- <tasks :list="" button-text="Add Comment" :handle-button-click="createComment"></tasks> -->
+            <div v-for="list in lists[board._id]">
+                <h1>{{list.title}}</h1>
+                <form @submit.prevent="createTask(list)" :key="list._id">
+                    <input type="text" name="body" v-model="task.body" placeholder="Create a task">
+                    <button type="submit">Add Task</button>
+                </form>
+                <button @click="deleteList(list)">Delete this list</button>
+                <!-- <tasks :list="" button-text="Add Comment" :handle-button-click="createComment"></tasks> -->
+            </div>
+            {{taskList}}
         </div>
-        {{taskList}}
-    </div>
 
 </template>
 
@@ -32,15 +32,15 @@
                     title: '',
                     parentId: ''
                 },
-                task:{
+                task: {
                     body: '',
-                    parentId:''
+                    parentId: ''
                 }
             }
         },
         mounted() {
             this.$store.dispatch('fetchLists', this.board._id),
-            this.$store.dispatch('fetchTasks')
+                this.$store.dispatch('fetchTasks')
         },
         computed: {
             user() {
@@ -70,17 +70,17 @@
                 this.list.parentId = this.board._id
                 this.$store.dispatch('createList', this.list)
                 console.log(this.list)
-                this.list = {title: '', parentId: ''}
+                this.list = { title: '', parentId: '' }
             },
             deleteList(list) {
                 this.$store.dispatch('deleteList', list)
             },
-            createTask(list){
-                this.task.parentId=list._id
-        
+            createTask(list) {
+                this.task.parentId = list._id
+
                 console.log(this.task)
-                this.$store.dispatch('createTask',this.task)
-                this.task={body: '', parentId: ''}
+                this.$store.dispatch('createTask', this.task)
+                this.task = { body: '', parentId: '' }
             }
         }
     }

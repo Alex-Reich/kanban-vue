@@ -19,7 +19,7 @@ var auth = axios.create({
 
 vue.use(vuex)
 
-function createTaskList(arr) {
+function createDictionary(arr) {
   var out = {}
   for (let i = 0; i < arr.length; i++) {
     const task = arr[i];
@@ -39,7 +39,7 @@ export default new vuex.Store({
     user: {},
     boards: [],
     board: {},
-    lists: [],
+    lists: {},
     tasks: [],
     taskList: {}
   },
@@ -51,7 +51,7 @@ export default new vuex.Store({
       state.user = {}
       state.boards = []
       state.board = {}
-      state.lists = [],
+      state.lists = {},
       state.taskList = {}
     },
     setBoards(state, boards) {
@@ -61,12 +61,11 @@ export default new vuex.Store({
       state.board = board
     },
     setLists(state, lists) {
-      state.lists = lists
+      state.lists = createDictionary(lists)
+      console.log(state.lists)
     },
     setTaskList(state, tasks) {
-      var task = createTaskList(tasks)
-      state.taskList = task
-      console.log("got here")
+      state.taskList = createDictionary(tasks)
     }
   },
   actions: {
@@ -135,7 +134,7 @@ export default new vuex.Store({
         })
     },
     fetchLists({ commit, dispatch }, boardId) {
-      api.get('/api/lists', boardId)
+      api.get('/api/lists')
         .then(res => {
           commit('setLists', res.data)
         })
