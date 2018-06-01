@@ -60,6 +60,7 @@
                 this.list.parentId = this.board._id
                 this.$store.dispatch('createList', this.list)
                 console.log(this.list)
+                this.list = {title: '', parentId: ''}
             },
             deleteList(list) {
                 this.$store.dispatch('deleteList', list)

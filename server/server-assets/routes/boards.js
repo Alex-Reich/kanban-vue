@@ -46,9 +46,6 @@ router.put('/api/boards/:id', (req, res) =>{
 
 // Delete board
 router.delete('/api/boards/:id', (req, res, next) =>{
-    if(req.body.author != req.session.id) {
-        return next()
-    }
     Boards.findByIdAndRemove(req.params.id)
     .then(board=>{
         res.status(200).send({message: 'successfully deleted'})

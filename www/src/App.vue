@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <h1>KANBAN VUE</h1>
-    <!-- Need to fix logout button. If already logged out, button should not show -->
 
     <router-view/>
   </div>

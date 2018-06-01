@@ -43,7 +43,7 @@
     methods: {
       createBoard() {
         this.$store.dispatch('createBoard', this.title)
-        this.title = ''
+        this.title = {title: ''}
       },
       boardPage(board) {
         this.$store.commit('setBoard', board)

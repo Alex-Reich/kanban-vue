@@ -17,13 +17,18 @@ var auth = axios.create({
   withCredentials: true
 })
 
+function testFunction() {
+  console.log("it works")
+}
+
 export default new vuex.Store({
   state: {
     user: {},
     boards: [],
     board: {},
     lists: [],
-    tasks: []
+    tasks: [],
+    taskList:{}
   },
   mutations: {
     setUser(state, user) {
@@ -47,6 +52,10 @@ export default new vuex.Store({
     },
     setTasks(state, tasks){
       state.tasks = tasks
+    },
+    setTaskList(state, tasks){
+      // state.taskList = tasks
+      console.log("got here")
     }
   },
   actions: {
@@ -119,16 +128,16 @@ export default new vuex.Store({
     deleteBoard({ commit, dispatch, state }, board) {
       api.delete('/api/boards/' + board._id, board)
         .then(res => {
+          testFunction()
           dispatch('fetchBoards', state.user)
         })
-    },
-    fetchTasks({commit, dispatch}, listId) {
-      api.get('/api/tasks' + listId)
+      },
+    fetchTasks({commit, dispatch}) {
+      api.get('/api/tasks')
       .then(res =>{
         commit('setTasks', res.data)
       })
     }
-
 
 
   }
