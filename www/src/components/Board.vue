@@ -17,7 +17,7 @@
             <button @click="deleteList(list)">Delete this list</button>
             <!-- <tasks :list="" button-text="Add Comment" :handle-button-click="createComment"></tasks> -->
         </div>
-        {{tasks}}
+        {{taskList}}
     </div>
 
 </template>
@@ -54,9 +54,6 @@
             },
             taskList() {
                 return this.$store.state.taskList
-            },
-            tasks(){
-                return this.$store.state.tasks
             }
         },
         methods: {

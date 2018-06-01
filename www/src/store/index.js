@@ -17,8 +17,19 @@ var auth = axios.create({
   withCredentials: true
 })
 
-function testFunction() {
-  console.log("it works")
+function createTaskList(arr) {
+  var out = {}
+  for (let i = 0; i < arr.length; i++) {
+    const task = arr[i];
+    if (!out[task.parentId]) {
+      out[task.parentId] = []
+      out[task.parentId].push(task)
+    }
+    else {
+      out[task.parentId].push(task)
+    }
+  }
+  return out
 }
 
 export default new vuex.Store({
@@ -38,8 +49,8 @@ export default new vuex.Store({
       state.user = {}
       state.boards = []
       state.board = {}
-      state.lists = []
-      state.tasks = []
+      state.lists = [],
+      state.taskList = {}
     },
     setBoards(state, boards) {
       state.boards = boards
@@ -50,11 +61,9 @@ export default new vuex.Store({
     setLists(state, lists) {
       state.lists = lists
     },
-    setTasks(state, tasks) {
-      state.tasks = tasks
-    },
     setTaskList(state, tasks) {
-      // state.taskList = tasks
+      var task = createTaskList(tasks)
+      state.taskList = task
       console.log("got here")
     }
   },
@@ -112,7 +121,6 @@ export default new vuex.Store({
     deleteBoard({ commit, dispatch, state }, board) {
       api.delete('/api/boards/' + board._id, board)
         .then(res => {
-          testFunction()
           dispatch('fetchBoards', state.user)
         })
     },
@@ -141,7 +149,7 @@ export default new vuex.Store({
     fetchTasks({ commit, dispatch }) {
       api.get('/api/tasks')
         .then(res => {
-          commit('setTasks', res.data)
+          commit('setTaskList', res.data)
         })
     },
     deleteTasks({ commit, dispatch }, task) {
