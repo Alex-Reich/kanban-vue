@@ -7,9 +7,9 @@
                 <div v-if="comments[task._id]">
                     <comments :list="comments[task._id]"></comments>
                 </div>
-                <form @submit.prevent="handleButtonClick(task)" :key="task._id">
+                <form @submit.prevent="createComment(task)" :key="task._id">
                     <input type="text" name="body" v-model="comment.body" placeholder="Add a comment">
-                    <button type="submit">{{buttonText}}</button>
+                    <button type="submit">Add Comment</button>
                 </form>
             </li>
         </ul>
@@ -38,15 +38,8 @@
             list: {
                 type: Array,
                 required: true
-            },
-            buttonText: {
-                type: String,
-                required: true
-            },
-            handleButtonClick: {
-                type: Function,
-                required: true
             }
+            
         },
         computed: {
             comments() {
@@ -57,7 +50,14 @@
             deleteTask(task) {
                 this.$store.dispatch('deleteTask', task)
             },
-            
+            createComment(task){
+                console.log(task)
+                this.comment.parentId=task._id
+                console.log(this.comment)
+                this.$store.dispatch('createComment', this.comment)
+                this.comment={ body: '', parentId: '' }
+            }
+
         }
     }
 

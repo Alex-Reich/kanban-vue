@@ -16,7 +16,7 @@
                 </form>
                 <button @click="deleteList(list)">Delete this list</button>
                 <div v-if="taskList[list._id]">
-                    <tasks :list="taskList[list._id]" button-text="Add Comment" :handle-button-click="createComment"></tasks>
+                    <tasks :list="taskList[list._id]"></tasks>
                 </div>
             </div>
         </div>
@@ -38,10 +38,6 @@
                     parentId: ''
                 },
                 task: {
-                    body: '',
-                    parentId: ''
-                },
-                comment: {
                     body: '',
                     parentId: ''
                 }
@@ -87,12 +83,6 @@
                 this.task.parentId = list._id
                 this.$store.dispatch('createTask', this.task)
                 this.task = { body: '', parentId: '' }
-            },
-            createComment(task){
-                this.comment.parentId=task._id
-                console.log(this.comment)
-                this.$store.dispatch('createComment', this.comment)
-                this.comment={ body: '', parentId: '' }
             }
         }
     }

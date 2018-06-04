@@ -158,7 +158,7 @@ export default new vuex.Store({
           commit('setTaskList', res.data)
         })
     },
-    deleteTasks({ commit, dispatch }, task) {
+    deleteTask({ commit, dispatch }, task) {
       api.delete('/api/tasks/' + task._id, task)
         .then(res => {
           dispatch('fetchTasks', task.parentId)
