@@ -89,10 +89,10 @@
 </script>
 
 <style>
-.list-title{
-    text-decoration: underline
-}
 .board-title{
     text-decoration: underline double
+}
+.list-title{
+    text-decoration: underline  
 }
 </style>
