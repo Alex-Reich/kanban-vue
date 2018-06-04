@@ -41,7 +41,8 @@ export default new vuex.Store({
     board: {},
     lists: {},
     tasks: [],
-    taskList: {}
+    taskList: {},
+    comments: {}
   },
   mutations: {
     setUser(state, user) {
@@ -53,6 +54,7 @@ export default new vuex.Store({
       state.board = {}
       state.lists = {},
       state.taskList = {}
+      state.comments={}
     },
     setBoards(state, boards) {
       state.boards = boards
@@ -66,6 +68,9 @@ export default new vuex.Store({
     },
     setTaskList(state, tasks) {
       state.taskList = createDictionary(tasks)
+    },
+    setComments(state, comments){
+      state.comments=createDictionary(comments)
     }
   },
   actions: {
@@ -164,9 +169,27 @@ export default new vuex.Store({
         .then(res => {
           dispatch('fetchTasks', task.parentId)
         })
+    },
+    
+    //////// COMMENTS //////////////////////////////////
+    fetchComments({ commit, dispatch }) {
+      api.get('/api/comments')
+        .then(res => {
+          commit('setComments', res.data)
+        })
+    },
+    deleteComments({ commit, dispatch }, task) {
+      api.delete('/api/comments/' + task._id, task)
+        .then(res => {
+          dispatch('fetchComments', task.parentId)
+        })
+    },
+    createComment({ commit, dispatch }, task) {
+      api.post('/api/comments', task)
+        .then(res => {
+          dispatch('fetchComments', task.parentId)
+        })
     }
-
-
   }
 })
 

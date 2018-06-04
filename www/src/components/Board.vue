@@ -15,17 +15,22 @@
                     <button type="submit">Add Task</button>
                 </form>
                 <button @click="deleteList(list)">Delete this list</button>
-                <!-- <tasks :list="" button-text="Add Comment" :handle-button-click="createComment"></tasks> -->
+                <div v-if="taskList[list._id]">
+                    <tasks :list="taskList[list._id]" button-text="Add Comment" :handle-button-click="createComment"></tasks>
+                </div>
             </div>
-            {{taskList}}
         </div>
 
 </template>
 
 <script>
     import router from '../router'
+    import tasks from './Tasks'
     export default {
         name: 'Board',
+        components:{
+            tasks
+        },
         data() {
             return {
                 list: {
@@ -33,6 +38,10 @@
                     parentId: ''
                 },
                 task: {
+                    body: '',
+                    parentId: ''
+                },
+                comment: {
                     body: '',
                     parentId: ''
                 }
@@ -69,7 +78,6 @@
             createList() {
                 this.list.parentId = this.board._id
                 this.$store.dispatch('createList', this.list)
-                console.log(this.list)
                 this.list = { title: '', parentId: '' }
             },
             deleteList(list) {
@@ -77,10 +85,14 @@
             },
             createTask(list) {
                 this.task.parentId = list._id
-
-                console.log(this.task)
                 this.$store.dispatch('createTask', this.task)
                 this.task = { body: '', parentId: '' }
+            },
+            createComment(task){
+                this.comment.parentId=task._id
+                console.log(this.comment)
+                this.$store.dispatch('createComment', this.comment)
+                this.comment={ body: '', parentId: '' }
             }
         }
     }
