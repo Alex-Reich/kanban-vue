@@ -5,7 +5,7 @@
                 <h3 class="task-body">{{task.body}}</h3>
                 <select v-model="selected" @change="moveTask(task)">
                     <option disabled value="">Move to list:</option>
-                    <option v-for="list in lists" v-bind:value="list._id">{{list.title}}</option>
+                    <option v-for="list in lists" v-if="task.parentId!=list._id" v-bind:value="list._id">{{list.title}}</option>
                 </select>
                 <button @click="deleteTask(task)">Delete this task</button>
                 <div v-if="comments[task._id]">
@@ -60,18 +60,14 @@
                 this.$store.dispatch('deleteTask', task)
             },
             createComment(task) {
-                console.log(task)
                 this.comment.parentId = task._id
-                console.log(this.comment)
                 this.$store.dispatch('createComment', this.comment)
                 this.comment = { body: '', parentId: '' }
             },
-            moveTask(task){
-                console.log("moveTask task= ", task)
-                console.log("selected id= ",this.selected)
-                task.parentId=this.selected
+            moveTask(task) {
+                task.parentId = this.selected
                 this.$store.dispatch('moveTask', task)
-                this.selected=''
+                this.selected = ''
             }
         }
     }
@@ -79,7 +75,9 @@
 </script>
 
 <style>
-    .task-body{
+    .task-body {
         text-decoration: underline dashed
     }
+</style>
+.task-body{ text-decoration: underline dashed }
 </style>

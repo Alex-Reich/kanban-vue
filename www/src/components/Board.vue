@@ -1,14 +1,19 @@
 <template>
-    <div class="Board">
-        <button @click="logout" v-if="user">Logout</button>
-        <button @click="pageHome">Back to home</button>
-        <hr>
-        <h1 class="board-title">{{board.title}}</h1>
-        <form @submit.prevent="createList">
-            <input type="text" name="title" v-model="list.title" placeholder="Title goes here">
-            <button type="submit">Add list</button>
-        </form>
-            <div class="board" v-for="list in lists[board._id]">
+    <div class="Board container-fluid">
+        <div class="row d-flex">
+            <div class="col-12 justify-content-between">
+                <button @click="logout" v-if="user">Logout</button>
+                <button @click="pageHome">Back to home</button>
+            </div>
+            <hr>
+            <div class="col-12 justify-content-center">
+                <h1 class="board-title">{{board.title}}</h1>
+                <form @submit.prevent="createList">
+                    <input type="text" name="title" v-model="list.title" placeholder="Title goes here">
+                    <button type="submit">Add list</button>
+                </form>
+            </div>
+            <div v-for="list in lists[board._id]" class="col-3">
                 <h2 class="list-title">{{list.title}}</h2>
                 <form @submit.prevent="createTask(list)" :key="list._id">
                     <input type="text" name="body" v-model="task.body" placeholder="Create a task">
@@ -20,6 +25,7 @@
                 </div>
             </div>
         </div>
+    </div>
 
 </template>
 
@@ -28,7 +34,7 @@
     import tasks from './Tasks'
     export default {
         name: 'Board',
-        components:{
+        components: {
             tasks
         },
         data() {
@@ -89,10 +95,11 @@
 </script>
 
 <style>
-.board-title{
-    text-decoration: underline double
-}
-.list-title{
-    text-decoration: underline  
-}
+    .board-title {
+        text-decoration: underline double;
+    }
+
+    .list-title {
+        text-decoration: underline;
+    }
 </style>
