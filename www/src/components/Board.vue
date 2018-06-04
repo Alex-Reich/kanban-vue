@@ -24,6 +24,7 @@
                     <tasks :list="taskList[list._id]" :lists="lists[board._id]"></tasks>
                 </div>
             </div>
+        
         </div>
     </div>
 
