@@ -3,13 +3,13 @@
         <button @click="logout" v-if="user">Logout</button>
         <button @click="pageHome">Back to home</button>
         <hr>
-        <h1>{{board.title}}</h1>
+        <h1 class="board-title">{{board.title}}</h1>
         <form @submit.prevent="createList">
             <input type="text" name="title" v-model="list.title" placeholder="Title goes here">
             <button type="submit">Add list</button>
         </form>
-            <div v-for="list in lists[board._id]">
-                <h1>{{list.title}}</h1>
+            <div class="board" v-for="list in lists[board._id]">
+                <h2 class="list-title">{{list.title}}</h2>
                 <form @submit.prevent="createTask(list)" :key="list._id">
                     <input type="text" name="body" v-model="task.body" placeholder="Create a task">
                     <button type="submit">Add Task</button>
@@ -89,4 +89,10 @@
 </script>
 
 <style>
+.list-title{
+    text-decoration: underline
+}
+.board-title{
+    text-decoration: underline double
+}
 </style>

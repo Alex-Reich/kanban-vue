@@ -2,7 +2,7 @@
     <div class="tasks">
         <ul>
             <li v-for="task in list">
-                <p>{{task.body}}</p>
+                <h3>{{task.body}}</h3>
                 <select v-model="selected" @change="moveTask(task)">
                     <option disabled value="">Move to list:</option>
                     <option v-for="list in lists" v-bind:value="list._id">{{list.title}}</option>

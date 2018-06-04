@@ -2,7 +2,7 @@
   <div class="comments">
     <ol>
       <li v-for="comment in list">
-        <p>{{comment.body}}</p>
+        <h5>{{comment.body}}</h5>
         <button @click="deleteComment(comment)">Delete Comment</button>
       </li>
     </ol>
