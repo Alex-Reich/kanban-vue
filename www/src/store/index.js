@@ -178,16 +178,16 @@ export default new vuex.Store({
           commit('setComments', res.data)
         })
     },
-    deleteComments({ commit, dispatch }, task) {
-      api.delete('/api/comments/' + task._id, task)
+    deleteComments({ commit, dispatch }, comment) {
+      api.delete('/api/comments/' + comment._id, comment)
         .then(res => {
-          dispatch('fetchComments', task.parentId)
+          dispatch('fetchComments', comment.parentId)
         })
     },
-    createComment({ commit, dispatch }, task) {
-      api.post('/api/comments', task)
+    createComment({ commit, dispatch }, comment) {
+      api.post('/api/comments', comment)
         .then(res => {
-          dispatch('fetchComments', task.parentId)
+          dispatch('fetchComments', comment.parentId)
         })
     }
   }
