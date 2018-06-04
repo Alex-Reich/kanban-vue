@@ -3,7 +3,7 @@
     <ol>
       <li v-for="comment in list">
         <p>{{comment.body}}</p>
-        <button @click="deleteComment(comment)"></button>
+        <button @click="deleteComment(comment)">Delete Comment</button>
       </li>
     </ol>
   </div>
@@ -26,8 +26,7 @@
     computed: {},
     methods: {
       deleteComment(comment) {
-        console.log('make the path')
-        //this.$store.dispatch('deleteComment', comment)
+        this.$store.dispatch('deleteComment', comment)
       }
     }
   }

@@ -178,7 +178,7 @@ export default new vuex.Store({
           commit('setComments', res.data)
         })
     },
-    deleteComments({ commit, dispatch }, comment) {
+    deleteComment({ commit, dispatch }, comment) {
       api.delete('/api/comments/' + comment._id, comment)
         .then(res => {
           dispatch('fetchComments', comment.parentId)
