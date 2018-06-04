@@ -16,7 +16,7 @@
                 </form>
                 <button @click="deleteList(list)">Delete this list</button>
                 <div v-if="taskList[list._id]">
-                    <tasks :list="taskList[list._id]"></tasks>
+                    <tasks :list="taskList[list._id]" :lists="lists[board._id]"></tasks>
                 </div>
             </div>
         </div>

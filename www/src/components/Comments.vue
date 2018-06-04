@@ -14,7 +14,6 @@
     name: 'Tasks',
     data() {
       return {
-
       }
     },
     props: {
