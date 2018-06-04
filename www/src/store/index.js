@@ -170,6 +170,12 @@ export default new vuex.Store({
           dispatch('fetchTasks', task.parentId)
         })
     },
+    moveTask({dispatch,commit}, task){
+      api.put('/api/tasks/'+task._id,task)
+        .then(res=>{
+          dispatch('fetchTasks', task.parentId)
+        })
+    },
     
     //////// COMMENTS //////////////////////////////////
     fetchComments({ commit, dispatch }) {

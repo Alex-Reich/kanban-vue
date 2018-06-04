@@ -69,6 +69,8 @@
             moveTask(task){
                 console.log("moveTask task= ", task)
                 console.log("selected id= ",this.selected)
+                this.$store.dispatch('')
+                this.selected=''
             }
         }
     }
