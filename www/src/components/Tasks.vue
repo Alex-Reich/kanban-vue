@@ -3,9 +3,9 @@
         <ul>
             <li v-for="task in list">
                 <p>{{task.body}}</p>
-                <select v-model="selected">
+                <select v-model="selected" @change="moveTask(task)">
                     <option disabled value="">Move to list:</option>
-                    <option v-for="list in lists">{{list.title}}</option>
+                    <option v-for="list in lists" v-bind:value="list._id">{{list.title}}</option>
                 </select>
                 <button @click="deleteTask(task)">Delete this task</button>
                 <div v-if="comments[task._id]">
@@ -65,8 +65,11 @@
                 console.log(this.comment)
                 this.$store.dispatch('createComment', this.comment)
                 this.comment = { body: '', parentId: '' }
+            },
+            moveTask(task){
+                console.log("moveTask task= ", task)
+                console.log("selected id= ",this.selected)
             }
-
         }
     }
 
