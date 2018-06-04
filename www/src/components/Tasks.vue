@@ -69,7 +69,8 @@
             moveTask(task){
                 console.log("moveTask task= ", task)
                 console.log("selected id= ",this.selected)
-                this.$store.dispatch('')
+                task.parentId=this.selected
+                this.$store.dispatch('moveTask', task)
                 this.selected=''
             }
         }
