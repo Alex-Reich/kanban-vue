@@ -1,3 +1,5 @@
+Create boards, tasks, and comments; all connected as desired.
+
 # www
 
 > A Vue.js project
